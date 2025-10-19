@@ -91,23 +91,23 @@ PostgreSQL or SQLite (default)
 Installation Steps
 Clone the Repository
 
-Bash
+
 
 git clone https://github.com/KSam001/Capstone--Events-management.git
+
 cd Capstone--Events-management
+
+
 Create and Activate Virtual Environment
-
-Bash
-
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+
 Install Dependencies
-
-Bash
-
 pip install -r requirements.txt
-Configure Environment Variables
 
+
+Configure Environment Variables
 Create a file named .env in the project root and add the following:
 
 Code snippet
@@ -120,21 +120,18 @@ Run Database Migrations
 
 Apply the schema changes for the users and events apps.
 
-Bash
 
 python manage.py makemigrations
 python manage.py migrate
+
+
 Create a Superuser (Admin)
-
-Bash
-
 python manage.py createsuperuser
+
+
 Start the Development Server
-
-Bash
-
 python manage.py runserver
-The API will be available at http://127.0.0.1:8000/.
+
 
 🌐 Deployment Notes
 This project is configured for deployment using a WSGI server and static file handling middleware.
