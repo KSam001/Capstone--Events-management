@@ -23,4 +23,119 @@ The entire project is structured as a single deployable unit, with the Django ba
 | **Frontend** | HTML5, CSS3, JavaScript (Vanilla) | Simple interface for testing and visualization |
 | **Database** | SQLite (Default), PostgreSQL ready | Data persistence and management |
 
-Events Management API (Structure Deep Dive)This document serves as a summary of the Capstone: Events Management API project structure, detailing the role of each directory, file, and core Django application based on the provided repository snippet. The project follows best practices for a scalable Django REST Framework API.📁 Repository Structure and Core FilesThe structure indicates a well-organized Django project within a single repository, separating configuration, apps, and deployment files.File/DirectoryTypeFunction in Projectmanage.pyFileDjango's command-line utility. Used for local server management, running migrations, and creating new apps (e.g., python manage.py runserver).requirements.txtFileLists all Python dependencies, including Django, Django REST Framework, JWT libraries, and deployment tools (gunicorn).runtime.txtFileDeployment Configuration. Explicitly specifies the required Python version (Python 3.12.4), ensuring consistent environments across local development and production builds (e.g., on Render).ProcfileFileDeployment Configuration. Defines the commands needed to start the application's processes on the host (e.g., web: gunicorn ...)..gitignoreFileSpecifies files and directories that should be ignored by Git (e.g., virtual environment folders, compiled Python files, local database files like db.sqlite3).README.mdFileProject documentation, setup instructions, and API reference (as compiled in the previous response).frontend/DirectoryContains the separate client-side code (e.g., React, Vue, or simple HTML/JS) intended to consume this backend API. This separation ensures a clean Full-Stack architecture.🧩 Core Django Project and Application StructureThe project separates core business logic into reusable Django Apps (users, events), while the Project Folder (Capstone_Events_management) handles global configuration.1. Capstone_Events_management/ (Project Folder)This inner directory represents the main Python package for the entire project.FileFunctionDetails from Snippetwsgi.pyDeployment Entry Point.The Web Server Gateway Interface file, which acts as the bridge between the production web server (like Gunicorn) and the Django application. The latest commit (34c20bf) indicates a specific fix here, adjusting the path to ensure the application imports correctly during deployment, even with nested folder structures.settings.pyGlobal ConfigurationContains all top-level settings, including INSTALLED_APPS, database configuration (likely using dj-database-url), middleware, and JWT settings.urls.pyMain URL DispatcherThe root file that includes the URLs from all individual apps (users, events).2. users/ AppThis app is dedicated solely to Authentication and User Management.ModuleFunctionmodels.pyDefines the Custom User Model (e.g., using AbstractBaseUser or AbstractUser) and related user profiles.migrations/Stores the database migration files for the user model. The feat commit indicates these are present for deployment.views.py/urls.pyHandles logic and routing for registration (/register/), login (/token/), and potentially user profile management.3. events/ AppThis app contains the main Business Logic for the platform.ModuleFunctionmodels.pyDefines the Event model, including fields like title, date, location, and capacity. It may also define a Booking or Registration model with a foreign key relationship to the User model.views.py/serializers.pyContains the Django REST Framework ViewSets (likely ModelViewSet) and serializers to provide the full CRUD API for events.migrations/Stores the database migration files for the Event model. The feat commit ensures these are present for deployment.4. event_manager/ AppThis is likely a generic or Core app used for broader utility functions or settings that don't fit neatly into users or events.ModuleFunctionsettings.py (Potential)Might contain a separate configuration layer, or more likely, apps.py to configure the app itself.static/ / templates/The fix commit referencing TEMPLATES and STATICFILES_DIRS suggests this app is used for handling project-wide template and static file configuration, a common Django pattern.
+Capstone: Scalable Events Management API
+🚀 Project Overview
+The Events Management API is a robust, production-ready backend built using Django and the Django REST Framework (DRF). It serves as the core service for a modern full-stack events platform, providing secure, structured access to event and user data via RESTful endpoints.
+
+The primary objectives of this project were to implement best practices in:
+
+Custom User Authentication using JSON Web Tokens (JWT).
+
+Scalable Application Structure with separated functional apps (users, events).
+
+Cloud Deployment using Gunicorn, Whitenoise, and environment-specific configuration (runtime.txt, Procfile).
+
+⚙️ Core Architecture and Tenets
+The project is segmented into distinct applications and configuration files, each with a single, clear responsibility.
+
+Tenet/Component	Location	Function
+Project Configuration	Capstone_Events_management/	Houses the global settings (settings.py), URL routing (urls.py), and the WSGI entry point for the production server (wsgi.py).
+Authentication & Users	users/ App	Manages the Custom User Model. This app handles user registration, custom fields, and ensures email is the primary login credential.
+Events Business Logic	events/ App	Core API Functionality. Defines the Event and any related models (e.g., Registration), and implements the DRF ViewSets for full CRUD operations.
+Frontend Integration	frontend/ Folder	Contains the separate client-side code (e.g., React, Vue) that consumes the API endpoints, ensuring a clear separation of concerns.
+JWT Authorization	Implemented via simplejwt	Provides stateless, token-based security. Handles token generation (/api/token/), refresh, and validation for all protected endpoints.
+Deployment Setup	Procfile, runtime.txt	Defines the production environment. Procfile specifies the Gunicorn start command, while runtime.txt locks the Python version (python-3.12.4).
+
+
+
+🔑 API Reference and Authentication
+The API uses JSON Web Tokens (JWT) for secure, authorized access to protected endpoints.
+
+1. Token Acquisition
+To access event management features, you must first obtain an access token.
+
+Action	Endpoint	Method	Required Payload
+Register User	/api/users/register/	POST	email, password
+Obtain Tokens	/api/token/	POST	email, password
+Refresh Token	/api/token/refresh/	POST	refresh (token)
+
+
+
+2. Events Endpoints (Protected)
+All calls to the following endpoints must include the Authorization header with the format: Authorization: Bearer <ACCESS_TOKEN>.
+
+Endpoint	Method	Description
+/api/events/	GET	List all available events.
+/api/events/	POST	Create a new event. Requires event data (title, date, location, etc.).
+/api/events/<id>/	GET	Retrieve details for a specific event.
+/api/events/<id>/	PUT/PATCH	Update a specific event (Owner only).
+/api/events/<id>/	DELETE	Delete a specific event (Owner only).
+
+
+
+💻 Local Setup and Installation
+Follow these steps to get the API running on your local machine.
+
+Prerequisites
+Python 3.12+
+
+pip and venv (recommended)
+
+PostgreSQL or SQLite (default)
+
+Installation Steps
+Clone the Repository
+
+Bash
+
+git clone https://github.com/KSam001/Capstone--Events-management.git
+cd Capstone--Events-management
+Create and Activate Virtual Environment
+
+Bash
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+Install Dependencies
+
+Bash
+
+pip install -r requirements.txt
+Configure Environment Variables
+
+Create a file named .env in the project root and add the following:
+
+Code snippet
+
+SECRET_KEY='your_super_secret_key_here'
+DEBUG=True
+# Use SQLite for simple local setup
+DATABASE_URL=sqlite:///db.sqlite3 
+Run Database Migrations
+
+Apply the schema changes for the users and events apps.
+
+Bash
+
+python manage.py makemigrations
+python manage.py migrate
+Create a Superuser (Admin)
+
+Bash
+
+python manage.py createsuperuser
+Start the Development Server
+
+Bash
+
+python manage.py runserver
+The API will be available at http://127.0.0.1:8000/.
+
+🌐 Deployment Notes
+This project is configured for deployment using a WSGI server and static file handling middleware.
+
+Component	Purpose	Details
+Gunicorn	Production WSGI Server	Defined in the Procfile to handle concurrent requests efficiently.
+Whitenoise	Static File Serving	Handles the serving of static assets (CSS, JS) in a production environment, improving performance and reliability.
+wsgi.py Path Fix	Deployment Stability	The final commit (34c20bf) adjusted the path in wsgi.py to ensure correct import resolution, a critical fix for nested Django project structures on cloud hosts.
+
