@@ -1,7 +1,8 @@
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# FIX: Append the directory containing manage.py (one level up from the settings directory)
+sys.path.append(os.path.dirname(os.path.abspath(__file__))) 
 
 from django.core.wsgi import get_wsgi_application
 
