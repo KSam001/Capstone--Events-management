@@ -1,16 +1,12 @@
 import os
 import sys
-from pathlib import Path
 
-# Get the path to the inner directory (where wsgi.py is)
-SETTINGS_DIR = Path(__file__).resolve().parent
+# Get the absolute path to the directory *containing* manage.py and the settings module folder
+# This correctly sets the base for Django's module resolution.
+path_to_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-# Get the path to the top-level project directory (containing manage.py)
-# This assumes wsgi.py is inside a folder, which is inside the project root
-PROJECT_ROOT_DIR = SETTINGS_DIR.parent
-
-# Add the project root to the system path to enable module imports
-sys.path.insert(0, str(PROJECT_ROOT_DIR))
+# Insert the project root path at the beginning of the system path
+sys.path.insert(0, path_to_project_root)
 
 from django.core.wsgi import get_wsgi_application
 
