@@ -23,25 +23,4 @@ The entire project is structured as a single deployable unit, with the Django ba
 | **Frontend** | HTML5, CSS3, JavaScript (Vanilla) | Simple interface for testing and visualization |
 | **Database** | SQLite (Default), PostgreSQL ready | Data persistence and management |
 
-## 🚀 Getting Started
-
-Follow these steps to set up and run the project locally.
-
-### Prerequisites
-
-* Python 3.8+
-* `pip` and `venv` (or `conda`)
-
-### 1. Setup Environment and Dependencies
-
-```bash
-# Clone the repository
-git clone [https://github.com/KSam001/Capstone--Events-management.git](https://github.com/KSam001/Capstone--Events-management.git)
-cd Capstone--Events-management
-
-# Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate # On Windows, use: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
+Events Management API (Structure Deep Dive)This document serves as a summary of the Capstone: Events Management API project structure, detailing the role of each directory, file, and core Django application based on the provided repository snippet. The project follows best practices for a scalable Django REST Framework API.📁 Repository Structure and Core FilesThe structure indicates a well-organized Django project within a single repository, separating configuration, apps, and deployment files.File/DirectoryTypeFunction in Projectmanage.pyFileDjango's command-line utility. Used for local server management, running migrations, and creating new apps (e.g., python manage.py runserver).requirements.txtFileLists all Python dependencies, including Django, Django REST Framework, JWT libraries, and deployment tools (gunicorn).runtime.txtFileDeployment Configuration. Explicitly specifies the required Python version (Python 3.12.4), ensuring consistent environments across local development and production builds (e.g., on Render).ProcfileFileDeployment Configuration. Defines the commands needed to start the application's processes on the host (e.g., web: gunicorn ...)..gitignoreFileSpecifies files and directories that should be ignored by Git (e.g., virtual environment folders, compiled Python files, local database files like db.sqlite3).README.mdFileProject documentation, setup instructions, and API reference (as compiled in the previous response).frontend/DirectoryContains the separate client-side code (e.g., React, Vue, or simple HTML/JS) intended to consume this backend API. This separation ensures a clean Full-Stack architecture.🧩 Core Django Project and Application StructureThe project separates core business logic into reusable Django Apps (users, events), while the Project Folder (Capstone_Events_management) handles global configuration.1. Capstone_Events_management/ (Project Folder)This inner directory represents the main Python package for the entire project.FileFunctionDetails from Snippetwsgi.pyDeployment Entry Point.The Web Server Gateway Interface file, which acts as the bridge between the production web server (like Gunicorn) and the Django application. The latest commit (34c20bf) indicates a specific fix here, adjusting the path to ensure the application imports correctly during deployment, even with nested folder structures.settings.pyGlobal ConfigurationContains all top-level settings, including INSTALLED_APPS, database configuration (likely using dj-database-url), middleware, and JWT settings.urls.pyMain URL DispatcherThe root file that includes the URLs from all individual apps (users, events).2. users/ AppThis app is dedicated solely to Authentication and User Management.ModuleFunctionmodels.pyDefines the Custom User Model (e.g., using AbstractBaseUser or AbstractUser) and related user profiles.migrations/Stores the database migration files for the user model. The feat commit indicates these are present for deployment.views.py/urls.pyHandles logic and routing for registration (/register/), login (/token/), and potentially user profile management.3. events/ AppThis app contains the main Business Logic for the platform.ModuleFunctionmodels.pyDefines the Event model, including fields like title, date, location, and capacity. It may also define a Booking or Registration model with a foreign key relationship to the User model.views.py/serializers.pyContains the Django REST Framework ViewSets (likely ModelViewSet) and serializers to provide the full CRUD API for events.migrations/Stores the database migration files for the Event model. The feat commit ensures these are present for deployment.4. event_manager/ AppThis is likely a generic or Core app used for broader utility functions or settings that don't fit neatly into users or events.ModuleFunctionsettings.py (Potential)Might contain a separate configuration layer, or more likely, apps.py to configure the app itself.static/ / templates/The fix commit referencing TEMPLATES and STATICFILES_DIRS suggests this app is used for handling project-wide template and static file configuration, a common Django pattern.
