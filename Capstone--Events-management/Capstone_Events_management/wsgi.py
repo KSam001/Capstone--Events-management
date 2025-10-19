@@ -1,9 +1,16 @@
 import os
 import sys
+from pathlib import Path
 
-# Path fix for Render's nested structure:
-# Adds the directory containing 'manage.py' to the Python path.
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..'))
+# Get the path to the inner directory (where wsgi.py is)
+SETTINGS_DIR = Path(__file__).resolve().parent
+
+# Get the path to the top-level project directory (containing manage.py)
+# This assumes wsgi.py is inside a folder, which is inside the project root
+PROJECT_ROOT_DIR = SETTINGS_DIR.parent
+
+# Add the project root to the system path to enable module imports
+sys.path.insert(0, str(PROJECT_ROOT_DIR))
 
 from django.core.wsgi import get_wsgi_application
 
