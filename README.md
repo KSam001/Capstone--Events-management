@@ -1,49 +1,47 @@
-# Event Management API
+# Capstone: Event Management API 🗓️
 
-## Project Overview
+This project is a robust, production-ready RESTful API and a functional, integrated simple **HTML/CSS/JS frontend** for managing user accounts, creating events, and handling RSVPs. The project is built using **Django** and **Django REST Framework (DRF)**.
 
-The **Event Management API** is a robust RESTful service designed to allow users to create, manage, and RSVP to events. Built using **Django** and **Django REST Framework (DRF)**, the API provides a secure and scalable backend for any event-based application, focusing on user management, model relationships, and detailed access control.
+The entire project is structured as a single deployable unit, with the Django backend serving the simple frontend for easy demonstration and deployment.
 
----
+## 🌟 Features
 
-## 🚀 Key Features
-
-* **User Management:** Secure registration, login, and profile management using **email as the primary authentication field**.
-* **Event CRUD:** Authenticated users can create, view, update, and delete events.
-* **Access Control:** Only the event host can modify or delete their events.
-* **Event RSVP System:** Users can easily RSVP to an event and view the list of attendees.
-* **Public Listings:** View a complete list of upcoming events available to all users.
-
----
+* **User Authentication:** Secure registration and login using **JWT (JSON Web Tokens)** via `djangorestframework-simplejwt`.
+* **User Profile Management:** Users can view and update their own profile information.
+* **Event Management (CRUD):** Authenticated users can create, read, update, and delete their own events.
+* **RSVP System:** Authenticated users can RSVP to any event, or cancel an existing RSVP.
+* **API Structure:** All core logic is exposed via clean, documented RESTful endpoints.
+* **Integrated Frontend:** A basic HTML/CSS/JS frontend is served at the root `/` URL for immediate visualization and interaction with the API.
 
 ## 🛠️ Technology Stack
 
-* **Backend Framework:** Django
-* **API Framework:** Django REST Framework (DRF)
-* **Database:** PostgreSQL (Recommended for production) / SQLite (Default for development)
-* **Authentication:** Token-based Authentication
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Backend Framework** | Django | Core web framework |
+| **API** | Django REST Framework (DRF) | Building the RESTful API endpoints |
+| **Authentication** | djangorestframework-simplejwt | Handling secure JWT access and refresh tokens |
+| **Frontend** | HTML5, CSS3, JavaScript (Vanilla) | Simple interface for testing and visualization |
+| **Database** | SQLite (Default), PostgreSQL ready | Data persistence and management |
 
----
+## 🚀 Getting Started
 
-## 💡 API Endpoints
+Follow these steps to set up and run the project locally.
 
-The API is structured around two main apps: `users` and `events`. All endpoints are prefixed with `/api/`.
+### Prerequisites
 
-### User Endpoints (`users` app)
+* Python 3.8+
+* `pip` and `venv` (or `conda`)
 
-| Method | Endpoint | Description | Authentication |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/register/` | Create a new user account. | None |
-| `POST` | `/api/login/` | Log in and receive an authentication token. | None |
-| `GET/PUT` | `/api/profile/` | View/update the authenticated user's profile. | Token Required |
+### 1. Setup Environment and Dependencies
 
-### Event Endpoints (`events` app)
+```bash
+# Clone the repository
+git clone [https://github.com/KSam001/Capstone--Events-management.git](https://github.com/KSam001/Capstone--Events-management.git)
+cd Capstone--Events-management
 
-| Method | Endpoint | Description | Authentication |
-| :--- | :--- | :--- | :--- |
-| `GET/POST` | `/api/events/` | List all events or create a new event. | POST requires Token |
-| `GET/PUT/DELETE` | `/api/events/<id>/` | Retrieve, update, or delete a specific event. | PUT/DELETE requires Host Token |
-| `POST` | `/api/events/<id>/rsvp/` | RSVP to an event (toggle attendance). | Token Required |
-| `GET` | `/api/events/<id>/attendees/` | View a list of users who have RSVP'd. | Any User |
+# Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate # On Windows, use: venv\Scripts\activate
 
----
+# Install dependencies
+pip install -r requirements.txt
