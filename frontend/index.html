@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Manager API Frontend</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Event Manager</h1>
+        <nav>
+            <button id="auth-btn">Login / Register</button>
+            <button id="create-event-btn" style="display:none;">+ Create Event</button>
+            <button id="logout-btn" style="display:none;">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <div id="auth-form" class="card" style="display:none;">
+            <h2>User Authentication</h2>
+            <h3>Login</h3>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+
+            <h3>Register</h3>
+            <form id="register-form">
+                <input type="text" id="reg-fname" placeholder="First Name" required>
+                <input type="text" id="reg-lname" placeholder="Last Name" required>
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <input type="date" id="reg-dob" required>
+                <input type="password" id="reg-password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+            <button class="close-btn">Close</button>
+        </div>
+
+        <div id="event-form" class="card" style="display:none;">
+            <h2>Create New Event</h2>
+            <form id="new-event-form">
+                <input type="text" id="event-title" placeholder="Title" required>
+                <textarea id="event-description" placeholder="Description" required></textarea>
+                <input type="date" id="event-date" required>
+                <input type="time" id="event-time" required>
+                <input type="text" id="event-location" placeholder="Location" required>
+                <button type="submit">Create Event</button>
+            </form>
+            <button class="close-btn">Close</button>
+        </div>
+
+        <h2>Upcoming Events</h2>
+        <div id="events-list">
+            <p>Loading events...</p>
+        </div>
+    </main>
+    <footer>&copy; 2025 Event Manager</footer>
+
+    <script src="static/script.js"></script>
+</body>
+</html>

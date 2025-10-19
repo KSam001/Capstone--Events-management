@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Django stuff:
+*.log
+*.pot
+*.orig
+db.sqlite3
+/media
+/static
+
+# Virtual environment
+/venv
+
+# OS stuff
+.DS_Store
+
+# Critical Secrets
+.env
