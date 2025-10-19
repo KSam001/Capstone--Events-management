@@ -38,13 +38,18 @@ Cloud Deployment using Gunicorn, Whitenoise, and environment-specific configurat
 ⚙️ Core Architecture and Tenets
 The project is segmented into distinct applications and configuration files, each with a single, clear responsibility.
 
-Tenet/Component	Location	Function
-Project Configuration	Capstone_Events_management/	Houses the global settings (settings.py), URL routing (urls.py), and the WSGI entry point for the production server (wsgi.py).
-Authentication & Users	users/ App	Manages the Custom User Model. This app handles user registration, custom fields, and ensures email is the primary login credential.
-Events Business Logic	events/ App	Core API Functionality. Defines the Event and any related models (e.g., Registration), and implements the DRF ViewSets for full CRUD operations.
-Frontend Integration	frontend/ Folder	Contains the separate client-side code (e.g., React, Vue) that consumes the API endpoints, ensuring a clear separation of concerns.
-JWT Authorization	Implemented via simplejwt	Provides stateless, token-based security. Handles token generation (/api/token/), refresh, and validation for all protected endpoints.
-Deployment Setup	Procfile, runtime.txt	Defines the production environment. Procfile specifies the Gunicorn start command, while runtime.txt locks the Python version (python-3.12.4).
+
+Project Configuration	
+| **Component** | **Path / Tool** | **Description** |
+|----------------|------------------|------------------|
+| **Core Project Folder** | `Capstone_Events_management/` | Houses the global settings (`settings.py`), URL routing (`urls.py`), and the WSGI entry point for the production server (`wsgi.py`). |
+| **Authentication & Users** | `users/` App | Manages the Custom User Model. Handles user registration, custom fields, and ensures email is the primary login credential. |
+| **Events Business Logic** | `events/` App | Core API functionality. Defines the `Event` and related models (e.g., `Registration`), and implements the DRF ViewSets for full CRUD operations. |
+| **Frontend Integration** | `frontend/` Folder | Contains the separate client-side code (e.g., React, Vue) that consumes the API endpoints, ensuring a clear separation of concerns. |
+| **JWT Authorization** | Implemented via `simplejwt` | Provides stateless, token-based security. Handles token generation (`/api/token/`), refresh, and validation for all protected endpoints. |
+| **Deployment Setup** | `Procfile`, `runtime.txt` | Defines the production environment. `Procfile` specifies the Gunicorn start command, while `runtime.txt` locks the Python version (`python-3.12.4`). |
+
+
 
 
 
