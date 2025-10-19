@@ -1,8 +1,9 @@
 import os
 import sys
 
-# FIX: Append the directory containing manage.py (one level up from the settings directory)
-sys.path.append(os.path.dirname(os.path.abspath(__file__))) 
+# Path fix for Render's nested structure:
+# Adds the directory containing 'manage.py' to the Python path.
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..'))
 
 from django.core.wsgi import get_wsgi_application
 
