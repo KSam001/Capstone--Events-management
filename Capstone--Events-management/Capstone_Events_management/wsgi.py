@@ -3,6 +3,7 @@ import sys
 
 # Get the absolute path to the directory *containing* manage.py and the settings module folder
 # This correctly sets the base for Django's module resolution.
+#just trying out something new. I want to see if this works
 path_to_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Insert the project root path at the beginning of the system path
